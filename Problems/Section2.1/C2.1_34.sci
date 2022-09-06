@@ -28,7 +28,7 @@ end
 // Compute vector of dot products.
 uDotU = u' * U;
 
-// Compute the average of |uU|_j, j = 1, ... ,30.
+// Compute the average of {|uU1| |uU2| .. |uU30|].
 uDotU_avg = mean(abs(uDotU));
 
 // Output result.
