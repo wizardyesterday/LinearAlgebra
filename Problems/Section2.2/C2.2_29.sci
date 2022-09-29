@@ -26,7 +26,7 @@ p = p / 100;
 
 // Output results.
 for k = 1:3
-  printf("|p%d%d|: %f\n",k,k,abs(p(k)));
+  printf("p%d%d: %f\n",k,k,p(k));
 end
 
 
