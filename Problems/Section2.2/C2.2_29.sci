@@ -13,11 +13,11 @@ p = zeros(1,3);
 
 for j = 1:100
   // Compute LU decomposition
-  [L,U] = lu(rand(eye(3,3)));
+  [L,U] = lu(rand(3,3));
 
   for k = 1:3
     // Update accumulators.
-    p(k) = U(k,k);
+    p(k) = p(k) +  U(k,k);
   end
 end
 
