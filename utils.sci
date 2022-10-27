@@ -554,7 +554,91 @@ function rxy = crosscorrelate(x,y,lag);
     rxy = accumulator / (numberOfSamples - lag);
   end
 
+endfunction
+
+//**********************************************************************
+//
+//  Name: pascal
+//
+//  Purpose: The purpose of this function is to generate a Pascal
+//  matrix.  This is performed by taking the matrix exponential of the
+//  appropriate generator matrix.
+//
+//  Calling Sequence: p = pascal(n,Type);
+//
+//  Inputs:
+//
+//    n - The order of the matrix.
+//
+//    Type - The type of matrix.  Valid values are:
+//
+//      [L|l] - Lower triangular.
+//      [U|u] - Upper triangular.
+//      [S|s] - Symmetric triangular.
+//
+//  Outputs:
+//
+//    P - The constructed Pascal matrix.
+//
+//**********************************************************************
+function p = pascal(n,Type)
+
+  // Construct the initial diagonal of our generator matrices.
+  d = diag(1:n-1);
+
+  // Set up the intial generator matrices.
+  lgen = d;
+  ugen = d;
+
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Construct the subdiagonal matrix
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Add the top row.
+  lgen = [zeros(1,n-1); lgen];
+
+  // Add the right column.
+  lgen = [lgen zeros(n,1)];
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Construct the superdiagonal matrix
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Add the bottom row.
+  ugen = [ugen; zeros(1,n-1)];
+
+  // Add the left column.
+  ugen = [zeros(n,1) ugen];
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+  select Type
+
+   case 'L'
+    // Generate lower triangular matrix.
+    p = expm(lgen);
+
+   case 'l'
+    // Generate lower triangular matrix.
+    p = expm(lgen);
+
+    case 'U'
+      // Generate upper triangular matrix.
+      p = expm(ugen);
+
+    case 'u'
+      // Generate upper triangular matrix.
+      p = expm(ugen);
+
+    case 'S'
+      // Generate symmetric triangular matrix.
+      p = expm(lgen) * expm(ugen);
+
+    case 's'
+      // Generate symmetric triangular matrix.
+      p = expm(lgen) * expm(ugen);
+
+  end // select
 
 endfunction
+
 
 
