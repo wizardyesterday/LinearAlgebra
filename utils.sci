@@ -640,5 +640,38 @@ function p = pascal(n,Type)
 
 endfunction
 
+//**********************************************************************
+//
+//  Name: hilbertMatrix
+//
+//  Purpose: The purpose of this function is to generate a Hilbert
+//  matrix, such that each entry of the matrix is defined by,
+//  Hij = 1/ (i + j - 1).
+//  Scilab provides a command to perform the inverse of this matrix:
+//  testmatrix('hilb',n).
+//
+//  Calling Sequence: h = hilbertMatrix(n)
+//
+//  Inputs:
+//
+//    n - The order of the matrix.
+//
+//  Outputs:
+//
+//    h - The n by n Hilbert matrix.
+//
+//**********************************************************************
+function h = hilbertMatrix(n)
+
+  // Preallocate the matrix.
+  h = zeros(n,n);
+
+  for i = 1:n
+    for j = 1:n
+      h(i,j) = 1 / (i + j - 1);
+    end
+  end
+
+endfunction
 
 
