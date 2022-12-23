@@ -1,4 +1,20 @@
 //******************************************************************
+// File name: LinearAlgebra.sci
+//******************************************************************
+// This file a port of the MATLAB functions downloaded from
+// http://web.mit.edu/18.06/www/Course-Info/Tcodes.html.  My
+// language of choice is Scilab, and this code executes undere
+// Scilab 4.1.2.  The header block style is different from how I
+// would write the header blocks, but in the name of keeping with
+// the spirit of the original MATLAB code, I maintained the style.
+// I have, however, added whitespace and indentation to help make
+// the logic more obvious.  This is merely a style issue, though,
+// and there is absolutely nothing wrong with the original MATLAB
+// code.
+// Chris G. 12/23/2022
+//******************************************************************
+
+//******************************************************************
 // cab  A = c a b echelon factorization.
 //
 // [c, a, b] = cab(A) gives echelon bases for the column space in c
@@ -42,7 +58,7 @@ function C = cofactor(A, i, j)
     [n,n] = size(A);
     for i = 1:n
       for j = 1:n
-     C(i,j) = cofactor(A, i, j);
+        C(i,j) = cofactor(A, i, j);
       end
    end
   end
@@ -73,17 +89,21 @@ endfunction
 function x = cramer(A, b)
 
   [m, n] = size(A);
+
   if m ~= n
     error('Matrix is not square.') 
   end
+
   if det(A) == 0
     error('Matrix is singular.')
   end
+
   for j = 1:n
     B = A;
     B(:, j) = b;
     x(j) = det(B) / det(A);
   end
+
   x = x';
 
 endfunction
@@ -117,6 +137,7 @@ function eigen2(A)
   t = A(1,1) + A(2,2);
   e1 = (t + sqrt(t^2 - 4*d))/2;
   e2 = (t - sqrt(t^2 - 4*d))/2;
+
   if A(1,2) ~= 0
      x1 = [A(1,2); e1-A(1,1)];
      x2 = [A(1,2); e2-A(1,1)];
@@ -202,6 +223,7 @@ function [S, D] = eigvec(A)
   I = eye(n,n);
   [evalues, repeats] = eigval(A);
   S = []; d = [];
+
   for k = 1 : length(evalues);
     s = nulbasis(A - evalues(k)*I);
     [ms, ns] = size(s);
@@ -209,6 +231,7 @@ function [S, D] = eigvec(A)
     temp = ones(ns, 1) * evalues(k);
     d = [d; temp];
   end
+
   D = diag(d);
 
 endfunction
@@ -249,7 +272,10 @@ function [k, p] = findpiv(A, k, p, tol)
 
   [m,  n] = size(A);
   r = find(abs(A(:)) > tol);
-  if isempty(r), return, end
+
+  if isempty(r)
+    return
+  end
   //
   r = r(1);
   j = fix((r-1)/m)+1;
@@ -274,19 +300,24 @@ function [Q, R] = grams(A)
 
   [m, n] = size(A);
   Asave = A;
+
   for j = 1:n
     for k = 1:j-1
       mult = (A(:, j)'*A(:, k)) / (A(:, k)'*A(:, k));
       A(:, j) = A(:, j) - mult*A(:, k);
     end
   end
+
   for j = 1:n
     if norm(A(:, j)) < sqrt(eps)
       error('Columns of A are linearly dependent.')
     end
+
     Q(:, j) = A(:, j) / norm(A(:, j));
   end
+
   R = Q'*Asave;
+
 endfunction
 
 //******************************************************************
@@ -317,6 +348,7 @@ function Ainv = inverse(A)
 
   [m, n] = size(A);
   r = rank(A);
+
   if (r == m) & (r == n) 
     [Ainv, R] = elim(A);
   else
@@ -370,7 +402,13 @@ function linefit(t, b)
   tline = [1.1*min(t)-0.1*max(t), 1.1*max(t)-0.1*min(t)];
   yline = c + d*tline;
   plot(t,b,'ro',t,c+d*t,'k*',tline,yline,'k-')
-  if d >= 0 , sign = ' + '; else, sign = ' - '; end
+
+  if d >= 0
+    sign = ' + ';
+  else
+    sign = ' - ';
+  end
+
   title(['Best line is ' num2str(c) sign num2str(abs(d)) '*t.'])
   xlabel('t')
 
@@ -391,6 +429,7 @@ function [xhat, p, e] = lsq(A, b)
   if det(A'*A) == 0
     error('Columns of A are linearly dependent.')
   end
+
   xhat = partic(A'*A, A'*b);
   p = A * xhat;
   e = b - p;
@@ -415,6 +454,7 @@ function [U, LAMBDA] = normal(A)
 
   [m, n] = size(A);
   E = A'*A - A*A';
+
   if norm(E) <= sqrt(%eps)
   //
   // The eigenvectors in S are linearly independent but not orthogonal.
@@ -453,7 +493,12 @@ endfunction
 //******************************************************************
 function N = nulbasis(A)
 
-  // Surprisingly, Scilab accepts this statement (two results).
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Surprisingly, Scilab accepts this statement.  The help
+  // page indicates that only the reduced echelon form is
+  // returned, but nothing is indicted about the pivot column
+  // vector.
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
   [R, pivcol] = rref(A, sqrt(%eps));
 
   [m, n] = size(A);
@@ -539,28 +584,37 @@ function [P, L, U, pivcol, sign] = plu(A)
   sign = 1;
 
   p = 1;
+
   for k = 1:min(m, n)
     [r, p] = findpiv(A(k:m, p:n), k, p, tol);
+
     if r ~= k
       A([r k], 1:n) = A([k r], 1:n);
+
       if k > 1
         L([r k], 1:k-1) = L([k r], 1:k-1);
       end
+
       P([r k], 1:m) = P([k r], 1:m);
       sign = -sign;
     end
+
     if abs(A(k, p)) >= tol
       pivcol = [pivcol p];
+
       for i = k+1:m
         L(i, k) = A(i, p) / A(k, p);
+
         for j = k+1:n
           A(i,j) = A(i, j) - L(i, k)*A(k, j);
         end
       end
     end
+
     for j = k:n
       U(k, j) = A(k, j) * (abs(A(k, j)) >= tol);
     end
+
     if p < n
       p = p+1;
     end
@@ -569,15 +623,19 @@ function [P, L, U, pivcol, sign] = plu(A)
   if argn(1) < 4
     nopiv = 1:n;
     nopiv(pivcol) = [];
+
     if ~isempty(pivcol)
       disp('Pivots in columns:')
       disp(pivcol);
     end
+
     if ~isempty(nopiv)
       disp('No pivots in columns:')
       disp(nopiv);
     end
+
     rank = length(pivcol);
+
     if rank > 0
       roworder = P*(1:m)';
       disp('Pivots in rows:')
@@ -670,7 +728,7 @@ endfunction
 //******************************************************************
 function B = rowbasis(A)
 
-B   = colbasis(A');
+  B   = colbasis(A');
 
 endfunction
 
@@ -733,16 +791,21 @@ function [L, U] = slu(A)
   [n, n] = size(A);
 
   for k = 1:n
+
     if abs(A(k, k)) < sqrt(%eps)
       disp(['Small pivot encountered in column ' int2str(k) '.'])
     end
+
     L(k, k) = 1;
+
     for i = k+1:n
       L(i,k) = A(i, k) / A(k, k);
+
       for j = k+1:n
         A(i, j) = A(i, j) - L(i, k)*A(k, j);
       end
     end
+
     for j = k:n
       U(k, j) = A(k, j);
     end
@@ -769,11 +832,14 @@ function x = slv(A, b)
 
   [n, n] = size(A);
   c = zeros(n, 1);
+
   for k = 1:n
   s = 0;
+
     for j = 1:k-1
       s = s + L(k, j)*c(j);
     end
+
     c(k) = b(k) - s;
   end
 
@@ -781,13 +847,17 @@ function x = slv(A, b)
   // U is upper triangular with nonzeros on the diagonal.
 
   x = zeros(n, 1);
+
   for k = n:-1:1
     t = 0;
+
     for j = k+1:n
       t = t + U(k, j)*x(j);
     end
+
     x(k) = (c(k) - t) / U(k, k);
   end
+
   x = x';
 
 endfunction
@@ -807,9 +877,11 @@ endfunction
 function [P, L, U, sign] = splu(A)
 
   [m, n] = size(A);
+
   if m ~= n
     error('Matrix must be square.')
   end
+
   P = eye(n, n);
   L = eye(n, n);
   U = zeros(n, n);
@@ -818,11 +890,15 @@ function [P, L, U, sign] = splu(A)
 
   for k = 1:n
     if abs(A(k, k)) < tol
+
       for r = k:n
+
         if abs(A(r, k)) >= tol
           break
         end
+
         if r == n
+
           if argn(1) == 4
             sign = 0;
             return
@@ -830,19 +906,24 @@ function [P, L, U, sign] = splu(A)
             disp('A is singular within tolerance.')
             error(['No pivot in column ' int2str(k) '.'])
           end
+
         end
       end
+
       A([r k], 1:n) = A([k r], 1:n);
       if k > 1, L([r k], 1:k-1) = L([k r], 1:k-1); end
       P([r k], 1:n) = P([k r], 1:n);
       sign = -sign;
     end
+
     for i = k+1:n
       L(i, k) = A(i, k) / A(k, k);
+
       for j = k+1:n
          A(i, j) = A(i, j) - L(i, k)*A(k, j);
       end
     end
+
     for j = k:n
       U(k, j) = A(k, j) * (abs(A(k, j)) >= tol);
     end
@@ -873,21 +954,27 @@ function x = splv(A, b)
          
   // Forward elimination to solve L*c = b.
   c = zeros(n, 1);
+
   for k = 1:n
     s = 0;
+
     for j = 1:k-1
       s = s + L(k, j)*c(j);
     end
+
     c(k) = b(k) - s;
   end
 
   // Back substitution to solve U*x = c.
   x = zeros(n, 1);
+
   for k = n:-1:1
     t = 0;
+
     for j = k+1:n
       t = t + U(k, j)*x(j);
     end
+
    x(k) = (c(k) - t) / U(k, k);
   end
 
@@ -908,6 +995,7 @@ endfunction
 function [Q, LAMBDA] = symmeig(A)
 
   [m, n] = size(A);
+
   if norm(A'-A) <= sqrt(%eps)
     //
     // The eigenvectors in S are linearly independent but not orthogonal.
