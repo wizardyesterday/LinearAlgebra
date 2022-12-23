@@ -151,17 +151,17 @@ function eigen2(A)
 
   disp(' ')
   disp('For this matrix, the polynomial whose roots are the eigenvalues is:')
-  disp(['   e^2 - ' num2str(t) '*e + ' num2str(d) ' = 0'])
+  disp(['   e^2 - ' string(t) '*e + ' string(d) ' = 0'])
 
   disp(' ')
   disp('The first eigenvalue and eigenvector are:')
-  e1
-  x1
+  disp(e1)
+  disp(x1)
 
   disp(' ')
   disp('The second eigenvalue and eigenvector are:')
-  e2
-  x2
+  disp(e2)
+  disp(x2)
 
 endfunction
 
@@ -409,7 +409,7 @@ function linefit(t, b)
     sign = ' - ';
   end
 
-  title(['Best line is ' num2str(c) sign num2str(abs(d)) '*t.'])
+  title(['Best line is ' string(c) sign string(abs(d)) '*t.'])
   xlabel('t')
 
 endfunction
@@ -1022,4 +1022,5 @@ function T = tridiag(a, b, c, n)
   T = b*diag(ones(n,1)) + c*diag(ones(n-1,1),1) + a*diag(ones(n-1,1),-1);
 
 endfunction
+
 
