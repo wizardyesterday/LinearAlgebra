@@ -339,7 +339,7 @@ function [Q, R] = grams(A)
   end
 
   for j = 1:n
-    if norm(A(:, j)) < sqrt(eps)
+    if norm(A(:, j)) < sqrt(%eps)
       error('Columns of A are linearly dependent.')
     end
 
