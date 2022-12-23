@@ -545,26 +545,26 @@ function [P, L, U, pivcol, sign] = plu(A)
       A([r k], 1:n) = A([k r], 1:n);
       if k > 1
         L([r k], 1:k-1) = L([k r], 1:k-1);
-      end // if
+      end
       P([r k], 1:m) = P([k r], 1:m);
       sign = -sign;
-    end // if
+    end
     if abs(A(k, p)) >= tol
       pivcol = [pivcol p];
       for i = k+1:m
         L(i, k) = A(i, p) / A(k, p);
         for j = k+1:n
           A(i,j) = A(i, j) - L(i, k)*A(k, j);
-        end // for
-      end// for
-    end // if
+        end
+      end
+    end
     for j = k:n
       U(k, j) = A(k, j) * (abs(A(k, j)) >= tol);
-    end // for
+    end
     if p < n
       p = p+1;
-    end // if
-  end // for
+    end
+  end
 
   if argn(1) < 4
     nopiv = 1:n;
