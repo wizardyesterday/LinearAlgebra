@@ -674,7 +674,6 @@ function [P, L, U, pivcol, sign] = plu(A)
   end
 
 endfunction
-
 //******************************************************************
 // poly2str  Convert a polynomial coefficient vector to a string.
 //
@@ -684,17 +683,72 @@ endfunction
 // p = poly2str(c, 's').
 // The coefficients are approximated, if necessary, by the rational
 // values obtained from rat.
-//	
-// If x has a numeric value and the elements of c are reproduced
-// exactly by rat, then eval(poly2str(c)) will return the same value 
-// as polyval(c, x).
 //
-// See also polyval, rat.
+// In all honesty, this function could have been implemented as
+// follows:
+//
+//     a = poly(c,"x","coef");
+//     p = pol2str(a);
+//
+// But alas, I will maintain the spirit of the original MATLAB
+// code.  I believe that the goal of this function is to teach the
+// student the mechanics of carrying out the operation.
+//
+// See also poly, pol2str, rat.
 //******************************************************************
-function p = poly2str(c)
+function p = poly2str(c, x)
 
-  a = poly(c,"x","coef");
-  p = pol2str(a);
+  if argn(2) < 2
+    x = 'x';
+  end
+
+  if sum(abs(c)) == 0
+    p = '0';
+    return;
+  end
+
+  p = [];
+  n = length(c);
+
+  for d = 0: n-1
+
+    if d > 0
+      if c(n-d+1) > 0
+        p = [' + ' p];
+      elseif c(n-d+1) < 0
+        p = [' - ' p];
+      end
+    end
+
+    if c(n-d) ~= 0
+      if d == 1
+        p = [x p];
+      elseif d > 1
+        p = [x '^' string(d) p];
+      end
+
+      if (abs(c(n-d)) ~= 1) | (d==0)
+        if d > 0,
+          p = ['*' p];
+        end
+
+        [sn, sd] = rat(abs(c(n-d)));
+        s = string(sn);
+
+        if sd ~= 1
+          s = [s '/' string(sd)];
+        end
+
+        p = [s p];
+      end
+    end
+  end
+
+  if n > 0
+    if c(1) < 0
+      p = ['-' p];
+    end
+  end
 
 endfunction
 
