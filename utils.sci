@@ -680,8 +680,8 @@ endfunction
 
 //
 //  Purpose: The purpose of this function is to generate a Hadamard
-//  matrix that produces the maximum value of the determinant of this
-//  matrix.
+//  matrix that produces the maximum magnitude of the determinant of
+//  this  matrix.
 //
 //  Calling Sequence: [H, detH] = buildHadamardMatrix(n)
 //
@@ -741,7 +741,7 @@ function [H, detH] = buildHadamardMatrix(n)
 
   // Set returned values.
   H = maxA;
-  detH = maxdet;
+  detH = det(maxA);
 
 endfunction
 
