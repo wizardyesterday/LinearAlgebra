@@ -674,4 +674,74 @@ function h = hilbertMatrix(n)
 
 endfunction
 
+//**********************************************************************
+//
+//  Name: buildMaximalDeterminant
+//
+//  Purpose: The purpose of this function is to generate a Hadamard
+//  matrix that produces the maximum value of the determinant of this
+//  matrix.
+//
+//  Calling Sequence: [H, detH] = buildMaximalDeterminant(n)
+//
+//  Inputs:
+//
+//    n - The order of the Hadamard matrix to be generated.
+//
+//  Outputs:
+//
+//    H - The Hadamard matrix that produces the maximum determinant
+//    value.
+//
+//    detH - The determinant of H.
+//
+//**********************************************************************
+function [H, detH] = buildMaximalDeterminant(n)
+
+  p = (n - 1)^2;
+
+  // Initialize the template matrix.
+  A0 = ones(n,n);
+
+  // Clear initial value of maximum value of the determinant.
+  maxdet = 0;
+
+  for k = 0 : 2^p - 1
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    // Generate a vector of negative powers of 2 multipled by
+    // the loop index.
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    m = k .* 2 .^(-p+1:0);
+
+    // Compute the integer part of the vector.
+    m = floor(m);
+
+    // We want a vector of 1's and 0's.
+    Asub = modulo(m,2);
+
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    // Reset A to our template since we want the top row and
+    // the first column to be all 1's.
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    A = A0;
+
+    // Update the submatrix of A.
+    A(2:n,2:n) = 1 - 2 * matrix(Asub,n-1,n-1);
+
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    // This block of code ensures that the matrix with the
+    // maximum absolute value of its determinant is saved.
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    if abs(det(A)) > maxdet
+      maxdet = abs(det(A));
+      maxA = A;
+    end
+  end
+
+  // Set returned values.
+  H = maxA;
+  detH = maxdet;
+
+endfunction
+
 
