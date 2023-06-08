@@ -11,9 +11,11 @@ exec('utils.sci',-1);
 
 // Compute the 5 by 5 matrix of 1's and -1's that has the maximum
 // value of the determinant.
-[h,d] = buildMaximalDeterminant(5);
+[h,d] = buildHadamardMatrix(5);
 
 // Display results.
+// Hadamard matrix.
 disp(h);
+// Determinant.
 disp(d);
 

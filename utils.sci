@@ -676,13 +676,14 @@ endfunction
 
 //**********************************************************************
 //
-//  Name: buildMaximalDeterminant
+//  Name: buildHadamardMatrix
+
 //
 //  Purpose: The purpose of this function is to generate a Hadamard
 //  matrix that produces the maximum value of the determinant of this
 //  matrix.
 //
-//  Calling Sequence: [H, detH] = buildMaximalDeterminant(n)
+//  Calling Sequence: [H, detH] = buildHadamardMatrix(n)
 //
 //  Inputs:
 //
@@ -696,7 +697,7 @@ endfunction
 //    detH - The determinant of H.
 //
 //**********************************************************************
-function [H, detH] = buildMaximalDeterminant(n)
+function [H, detH] = buildHadamardMatrix(n)
 
   p = (n - 1)^2;
 
