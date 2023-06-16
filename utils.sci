@@ -773,7 +773,7 @@ function M = permutationMatrix(p)
   // Initialize to false;
   badData = %F'
 
-  // Check of the data is corredt.
+  // Check of the data is correct.
   for i = 1:n
     k = find(p == i)
 
