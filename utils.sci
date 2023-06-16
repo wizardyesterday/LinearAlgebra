@@ -1,4 +1,4 @@
-//**********************************************************************
+                                                                                     //**********************************************************************
 // File Name: utils.sci
 //**********************************************************************
 
@@ -761,7 +761,8 @@ endfunction
 //
 //  Outputs:
 //
-//    M - The permuted identity matrix.
+//    M - The permuted identity matrix.  If the vector p (the input
+//    data) contains invalid data, a value of 0 is returned.
 //
 //**********************************************************************
 function M = permutationMatrix(p)
@@ -769,14 +770,30 @@ function M = permutationMatrix(p)
   // This will set size of the matrix.
   n = length(p);
 
-  // Construct initial matrix.
-  M = zeros(n,n);
+  // Initialize to false;
+  badData = %F'
 
+  // Check of the data is corredt.
   for i = 1:n
-    // Fill in the current permuted row entry.
-    M(i,p(i))= 1;
+    k = find(p == i)
+
+    if k == []
+      badData = %T;
+    end
+  end
+
+  // We only process good data. 
+  if badData == %F
+    // Construct initial matrix.
+    M = zeros(n,n);
+
+    for i = 1:n
+      // Fill in the current permuted row entry.
+      M(i,p(i))= 1;
+    end
+  else
+    // Indicate failure.
+    M = 0;
   end
 
 endfunction
-
-
