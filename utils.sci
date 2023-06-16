@@ -745,4 +745,38 @@ function [H, detH] = buildHadamardMatrix(n)
 
 endfunction
 
+//**********************************************************************
+//
+//  Name: permutationMatrix
+//
+//  Purpose: The purpose of this function is to construct a permutation
+//  matrix based upon a sequence of column numbers.  The result will
+//  be a permuted identity matrix.
+//
+//  Calling Sequence: < = permutationMatrix(p)
+//
+//  Inputs:
+//
+//    p - A vector that contains permuted values of 1..n.
+//
+//  Outputs:
+//
+//    M - The permuted identity matrix.
+//
+//**********************************************************************
+function M = permutationMatrix(p)
+
+  // This will set size of the matrix.
+  n = length(p);
+
+  // Construct initial matrix.
+  M = zeros(n,n);
+
+  for i = 1:n
+    // Fill in the current permuted row entry.
+    M(i,p(i))= 1;
+  end
+
+endfunction
+
 
