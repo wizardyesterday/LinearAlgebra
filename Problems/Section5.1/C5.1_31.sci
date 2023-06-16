@@ -8,7 +8,7 @@ exec('utils.sci',-1);
 //**********************************************************************
 // Mainline code.
 //**********************************************************************
-// Compute the determinants of the first tel Hilbert matrices.
+// Compute the determinants of the first ten Hilbert matrices.
 for i = 1:10
   d(i) = det(hilbertMatrix(i));
   end
