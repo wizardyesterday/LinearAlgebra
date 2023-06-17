@@ -771,19 +771,19 @@ function M = permutationMatrix(p)
   n = length(p);
 
   // Initialize to false;
-  badData = %F'
+  badData = 0;
 
   // Check of the data is correct.
   for i = 1:n
     k = find(p == i)
 
     if k == []
-      badData = %T;
+      badData = 1;
     end
   end
 
-  // We only process good data. 
-  if badData == %F
+  // We only process good data.
+  if badData == 0
     // Construct initial matrix.
     M = zeros(n,n);
 
