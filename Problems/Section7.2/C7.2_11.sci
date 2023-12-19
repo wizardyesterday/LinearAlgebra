@@ -46,7 +46,7 @@ legend("x1","Ax1");
 // Perform arbitrary unit vector plot.
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 subplot(212);
-title('Plot of Arbitrary Unit Vector x1 and Ax1');
+title('Plot of Arbitrary Unit Vector u and Au');
 
 a = gca();
 a.grid = [1 1];
