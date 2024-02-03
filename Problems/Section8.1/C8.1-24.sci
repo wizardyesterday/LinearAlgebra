@@ -9,7 +9,7 @@
 H = [-6 -6 -7 0 7 6  6 -3 -3  0  0 -6;
      -7  2  1 8 1 2 -7 -7 -2 -2 -7 -7];
 
-// Construct chimney matrix.
+// Construct chimmney matrix.
 C = [5 5 4 4;
      3 6 6 4];
 
@@ -17,7 +17,7 @@ C = [5 5 4 4;
 R = [ 6 6;
      -7 2];
 
-// Construct the house plus chimney matrix.
+// Construct the house plus chimmney matrix.
 HC = [H R C];
 
 // Plot the complete matrix.
