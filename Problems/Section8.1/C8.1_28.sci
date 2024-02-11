@@ -6,7 +6,12 @@
 //
 //  Name: plotArc
 //
-//  Purpose: The purpose of this function is to plot an arc.
+//  Purpose: The purpose of this function is to plot an arc.  Notice
+//  the order of operations:
+//    1. Scale the radius of the arc.
+//    2. Transform the arc by the transformation matrix.
+//    3. Translate the arc to the appropriate position.
+//    4. Draw the arc.
 //
 //  Calling Sequence: plotArc(r,x,y,startAngle,endAngle,A)
 //
@@ -58,6 +63,7 @@ function plotArc(r,x,y,startAngle,endAngle,angleResolution,A)
   // Translate.
   arc = arc + o;
 
+  // Draw the arc.
   plot2d(arc(1,:),arc(2,:));
 
 endfunction
@@ -106,8 +112,8 @@ I = eye(2,2);
 // Form aspect ratio.
 square(-4,-4,4,4);
 
-// Construct circle.
-plotArc(1,1,1,0,360,1,I);
+// Construct circle, referenced to the origin.
+plotArc(1,0,0,0,360,1,I);
 
-// Draw smile.
-smile(0.7,1,1,I);
+// Draw smile, referenced to the origin.
+smile(0.7,0,0,I);
