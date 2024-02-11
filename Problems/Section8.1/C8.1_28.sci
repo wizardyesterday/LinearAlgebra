@@ -19,9 +19,10 @@
 //
 //    r - The radius of curvature.
 //
-//    x - The x position of the arc.
+//    x - The x reference position of the arc.
 //
-//    y - The y position of the arc.
+//    y - The y reference position of the arc.  Together (x,y) define the
+//    origin.
 //
 //    startAngle - The start angle of the arc, in units of degrees.
 //
@@ -70,20 +71,21 @@ endfunction
 
 //**********************************************************************
 //
-//  Name: smile
+//  Name: plotSmiley
 //
 //  Purpose: The purpose of this function is to plot a smile on a
 //  circle.
 //
-//  Calling Sequence: smile(r,x,y,A)
+//  Calling Sequence: plotSmiley(r,x,y,A)
 //
 //  Inputs:
 //
 //    r - The radius of curvature.
 //
-//    x - The x position of the smile.
+//    x - The x reference position of the smile.
 //
-//    y - The y position of the smile.
+//    y - The y reference position of the smile.  Together (x,y) define the
+//    origin.
 //
 //    A - The transformation matrix.
 //  Outputs:
@@ -91,12 +93,52 @@ endfunction
 //    None.
 //
 //**********************************************************************
-function smile(r,x,y,A)
-
-  disp([r x y]);
+function plotSmiley(r,x,y,A)
 
   // Construct smile.
   plotArc(r,x,y,250,290,1,A);
+
+endfunction
+
+//**********************************************************************
+//
+//  Name: plotEyes
+//
+//  Purpose: The purpose of this function is to plot eyes on a
+//  circle.
+//
+//  Calling Sequence: plotEyes(r,x,y,A)
+//
+//  Inputs:
+//
+//    r - The radius of curvature.
+//
+//    x - The x reference position of the smile.
+//
+//    y - The y reference position of the smile.  Together (x,y) define the
+//    origin.
+//
+//    A - The transformation matrix.
+//  Outputs:
+//
+//    None.
+//
+//**********************************************************************
+function plotEyes(r,x,y,A)
+
+  // Compute coordinates for left eye.
+  xLeft = 0.3 * cos(5*%pi/6);
+  yLeft = 0.3 * sin(5*%pi/6);
+
+  // Compute coordinates for left eye.
+  xRight = 0.3 * cos(%pi/6);
+  yRight = 0.3 * sin(%pi/6);
+
+  // Plot left eye.
+  plotArc(r,xLeft,yLeft,0,360,0.1,A);
+
+  // Plot right eye.
+  plotArc(r,xRight,yRight,0,360,0.1,A);
 
 endfunction
 
@@ -109,11 +151,38 @@ A = [2 1; 1 2];
 // Construct identity transformation matrix.
 I = eye(2,2);
 
-// Form aspect ratio.
-square(-4,-4,4,4);
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+// Draw smiley face.
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+subplot(211);
+title('Untransformed');
+isoview(-1,1,-1,1);
 
 // Construct circle, referenced to the origin.
 plotArc(1,0,0,0,360,1,I);
 
 // Draw smile, referenced to the origin.
-smile(0.7,0,0,I);
+plotSmiley(0.7,0,0,I);
+
+// Draw eyes.
+plotEyes(0.05,0,0,I);
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+// Draw transformed smiley face.
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+subplot(212);
+title('Transformed With [2 1; 1 2]');
+isoview(-3,3,-3,3);
+
+// Construct circle, referenced to the origin.
+plotArc(1,0,0,0,360,1,A);
+
+// Draw smile, referenced to the origin.
+plotSmiley(0.7,0,0,A);
+
+// Draw eyes.
+plotEyes(0.05,0,0,A);
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+
