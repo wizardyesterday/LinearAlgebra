@@ -130,7 +130,7 @@ function plotEyes(r,x,y,A)
   xLeft = 0.3 * cos(5*%pi/6);
   yLeft = 0.3 * sin(5*%pi/6);
 
-  // Compute coordinates for left eye.
+  // Compute coordinates for right eye.
   xRight = 0.3 * cos(%pi/6);
   yRight = 0.3 * sin(%pi/6);
 
