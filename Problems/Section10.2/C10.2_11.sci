@@ -2,46 +2,8 @@
 // File Name: C10.2_11.sci
 //**********************************************************************
 
-//******************************************************************
-// 
-//  Name: FixedFixed
-//
-//  Purpose: The purpose of this function is to compute the
-//  difference matrix that is used to generate the fixed-fixed
-//  matrix, K = A'CA.
-//
-//  Calling Sequence: A = FixedFixed(n)
-//
-//  Inputs:
-//
-//    m - The number of columns in the output matrix.
-//
-//  Outputs:
-//
-//    A - the difference matrix.
-//
-//******************************************************************
-function A = FixedFixed(n)
-
-  // Construct identity matrix.
-  A = eye(n,n);
-
-  // Construct e -1 vector.
-  o = ones(1,n-1) * -1;
-
-  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-  // Construct temporary matrix. The '-1' implies below the main
-  //diagonal.
-  D = diag(o,-1);
-  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-
-  // Add to our fixed-fixed difference matrixmatrix.
-  A = A + D;
- 
-  // Append the final row.
-  A(n+1,n) = -1;
-
-endfunction
+// Bring in all of the utility functions.
+exec('utils.sci',-1);
 
 //**********************************************************************
 // Mainline code.
