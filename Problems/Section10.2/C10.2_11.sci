@@ -67,16 +67,20 @@ u2 = k2 \ f;
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 // Plot results.
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-subplot(211);
+subplot(121);
 a = gca();
 a.grid = [1 1];
 title('Fixed-fixwd Solution');
+xlabel('mass number');
+ylabel('movement');
 plot(u1);
 
-subplot(212);
+subplot(122);
 a = gca();
 a.grid = [1 1];
 title('Fixed-free Solution');
+xlabel('mass number');
+ylabel('movement');
 plot(u2);
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
