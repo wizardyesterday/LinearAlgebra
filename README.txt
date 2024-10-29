@@ -14,3 +14,9 @@ http://web.mit.edu/18.06/www/Course-Info/Tcodes.html.
 I have also added a doc directory that contains pdf and postscript
 representations of the above mentioned web page.
 
+****************************************************
+10/29/2023
+****************************************************
+I created a papers directory that contains published papers, not necessrily
+my own works.
+
