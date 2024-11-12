@@ -10,17 +10,14 @@ exec('utils.sci',-1)
 // Set display format to print to 3 decimal places. This is so FORTRAN!
 format(10);
 
-// Construct b with ||b+ = 1.
-b = ones(9,1) / 3;
-
-// Construct a 9 by 9 Hilbert matrix.
-H = hilbertMatrix(9);
+// Construct a 8 by 8 Hilbert matrix.
+H = hilbertMatrix(8);
 
 // Compute eigenvectors and eigenvalues.
 [X,Lamda] = spec(H);
 
 // Grab a of the diagonal entries of Lamda.
-for k = 1:9
+for k = 1:8
  lamdaKK(k) = Lamda(k,k);
 end
 
@@ -31,20 +28,5 @@ lamdaKK = lamdaKK(:);
 lamdaMin = min(lamdaKK);
 lamdaMax = max(lamdaKK);
 
-//Compute the norms of eaxh column of X.
-for k = 1:9
-  HNorm(:,k) = norm(H(:,k));
-end
-
-// Force a column vectoe.
-hNorm = HNorm(:);
-
-// Compute the solution to Hx = b.
-x = H \ b;
-
-// Compute ||x||.
-xNorm = norm(x);
-
-
-
-
+// Compute the norm of the inverse of H.
+hInvNorm = norm(H \ 1);
