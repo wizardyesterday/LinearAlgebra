@@ -10,6 +10,11 @@ exec('utils.sci',-1)
 // Set display format to print to 3 decimal places. This is so FORTRAN!
 format(10);
 
+// This is the requested drror bound.
+episilon = 1E-10;
+
+deltaB = episilon;
+
 // Construct a 8 by 8 Hilbert matrix.
 H = hilbertMatrix(8);
 
@@ -29,4 +34,9 @@ lamdaMin = min(lamdaKK);
 lamdaMax = max(lamdaKK);
 
 // Compute the norm of the inverse of H.
-hInvNorm = norm(H \ 1);
+hInvNorm = inv(H);
+hInvNorm = norm(hInvNorm);
+
+deltaX = hInvNorm * deltaB;
+
+
