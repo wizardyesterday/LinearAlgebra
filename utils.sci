@@ -838,3 +838,31 @@ function A = FixedFixed(n)
   A(n+1,n) = -1;
 
 endfunction
+
+//******************************************************************
+// 
+//  Name: randperm
+//
+//  Purpose: The purpose of this function is to emulate the MATLAB
+//  randperm() function.  The funtion returns a row vector 
+//  containing a random permutation of the integers from 1 to n
+//  without repeating elements.
+//
+//  Calling Sequence: v = randperm(n)
+//
+//  Inputs:
+//
+//    n the upper limit of random integer numbers in the output vector.
+//
+//  Outputs:
+//
+//    v - The output row vector of permuted integers.
+//
+//******************************************************************
+function v = randperm(n)
+
+// Emulae the MATLAB randperm) function.
+v = grand(1,"prm",(1:4)')'
+
+endfunction
+
