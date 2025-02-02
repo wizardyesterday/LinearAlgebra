@@ -17,7 +17,7 @@ exec('utils.sci',-1);
 //  using the Gauss-Seidel factorization.
 //
 //
-//  Calling Sequence: [ST] = GaussSeidelSplit(A)
+//  Calling Sequence: [S,T] = GaussSeidelSplit(A)
 //
 //  Inputs:
 //
@@ -28,10 +28,10 @@ exec('utils.sci',-1);
 //    S - The elements below and including the main diagonal of A.
 //    elements.  This is the lower triangular portion of A.
 //
-//  T - The negative of the upper triangular portion of A.
+//    T - The negative of the upper triangular portion of A.
 //
 //**********************************************************************
-function [S, T] = GaussSeidelSplit(A)
+function [S,T] = GaussSeidelSplit(A)
 
   // Compute the order of A.
   N = size(A);
@@ -50,6 +50,78 @@ function [S, T] = GaussSeidelSplit(A)
 
   // Compute -(upper triangular portion of A).
   T = S - A;
+
+endfunction
+
+//**********************************************************************
+//
+//  Name: GaussSeidelIteration
+//
+//  Purpose: The purpose of this function is to perform the Gauss-Seidel
+//  iteration to compute a solution to Ax = B.
+//
+//  Calling Sequence: [count,deltaX] = GaussSeidelIteration(S,T,b.tolerance)
+//
+//  Inputs:
+//
+//    S - The elements below and including the main diagonal of A.
+//    elements.  This is the lower triangular portion of A, which was
+//    previously split.
+//
+//    T - The negative of the upper triangular portion of A, which was
+//    previously split.
+//
+//    b - The constand vector for Ax = b.
+//
+//  Outputs:
+//
+//    count - The number of iterations that occurred in order to reach a
+//    solution.
+//
+//    deltaX - The norm of the difference of x between the final
+//    iteration and the previous iteration.
+//
+//    deltaX - The norm of the difference of x between the final
+//    iteration and the previous iteration.
+//
+//**********************************************************************
+function [n,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
+
+  // Ensure we have a column vector.
+  b = b(:);
+
+  // Save the length of b for creation of x.
+  len = length(b);
+
+  // Compute iterator mastrix and inverse matrix.
+  B = S \ T;
+  Sinverse = S \ 1;
+
+  // Create initial guess for solution.
+  x = zeros(len,1);
+
+  // Set up for loop wntry.
+  done = 0;
+  count = 0;
+
+  while done == 0 then
+
+    // One more iteration has occurred.
+    count =  count + 1;
+
+    // Compute estimate.
+    xNew = (B * x) + (Sinverse * b); 
+
+    //Compute norm of error.
+    deltaX = xNew - x;
+    deltaX = norm(deltaX);
+
+    if deltaX <= tolerance then
+      // Bail out of loop, we're done.
+      done = 1;
+    end    
+
+  end
 
 endfunction
 
@@ -73,7 +145,4 @@ A50 = toeplitz([2 -1 zeros(1,48)]);
 
 // Create the Splits.
 [S50,T50] = GaussSeidelSplit(A50);
-
-a = [1 2 3; 4 5 6; 7 8 9]
-[S,T] = GaussSeidelSplit(a);
 
