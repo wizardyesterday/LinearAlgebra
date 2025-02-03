@@ -143,7 +143,7 @@ endfunction
 b10 = zeros(10,1);
 b10(1) = 1;
 b20 = zeros(20,1);
-b10(1) = 1;
+b20(1) = 1;
 b50 = zeros(50,1);
 b50(1) = 1;
 
@@ -161,4 +161,9 @@ A50 = toeplitz([2 -1 zeros(1,48)]);
 [count10,x10,deltaX10] = GaussSeidelIteration(S10,T10,b10,0.0001);
 [count20,x20,deltaX20] = GaussSeidelIteration(S20,T20,b20,0.0001);
 [count50,x50,deltaX50] = GaussSeidelIteration(S50,T50,b50,0.0001);
+
+// Display outputs.
+disp([count10 count20 count50]);
+disp([deltaX10 deltaX20 deltaX50]);
+
 
