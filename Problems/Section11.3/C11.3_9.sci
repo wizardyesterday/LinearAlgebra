@@ -85,6 +85,8 @@ endfunction
 //    deltaX - The norm of the difference of x between the final
 //    iteration and the previous iteration.
 //
+//    x - The estimated solution.
+//
 //**********************************************************************
 function [n,x,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
 
