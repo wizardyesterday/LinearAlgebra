@@ -88,7 +88,7 @@ endfunction
 //    x - The estimated solution.
 //
 //**********************************************************************
-function [n,x,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
+function [count,x,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
 
   // Ensure we have a column vector.
   b = b(:);
