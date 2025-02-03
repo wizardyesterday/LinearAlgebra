@@ -60,7 +60,8 @@ endfunction
 //  Purpose: The purpose of this function is to perform the Gauss-Seidel
 //  iteration to compute a solution to Ax = B.
 //
-//  Calling Sequence: [count,deltaX] = GaussSeidelIteration(S,T,b.tolerance)
+//  Calling Sequence: [count,deltaXx,] =
+//                        GaussSeidelIteration(S,T,b.tolerance)
 //
 //  Inputs:
 //
@@ -85,7 +86,7 @@ endfunction
 //    iteration and the previous iteration.
 //
 //**********************************************************************
-function [n,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
+function [n,x,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
 
   // Ensure we have a column vector.
   b = b(:);
@@ -116,10 +117,18 @@ function [n,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
     deltaX = xNew - x;
     deltaX = norm(deltaX);
 
+    // Update estimate.
+    x = xNew;
+
     if deltaX <= tolerance then
       // Bail out of loop, we're done.
       done = 1;
-    end    
+    else
+      if count > 1000
+        // Bail out of loop, we failed to converge.
+        done = 1;
+      end
+    end
 
   end
 
