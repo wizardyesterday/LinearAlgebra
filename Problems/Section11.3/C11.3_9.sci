@@ -147,20 +147,21 @@ b10(1) = 1;
 b10 = zeros(50,1);
 b50(1) = 1;
 
-// Create the Splits.
-[S10,T10] = GaussSeidelSplit(A10);
-
-// Create the Splits.
-[S20,T20] = GaussSeidelSplit(A20);
-
 // Create second difference matrices of order 10, 20, 50..
 A10 = toeplitz([2 -1 zeros(1,8)]);
 A20 = toeplitz([2 -1 zeros(1,18)]);
 A50 = toeplitz([2 -1 zeros(1,48)]);
 
+
 // Create the Splits.
+[S10,T10] = GaussSeidelSplit(A10);
+[S20,T20] = GaussSeidelSplit(A20);
 [S50,T50] = GaussSeidelSplit(A50);
 
+b = zeros(2,1);
+b(1) = 0;
 a = [1 2; 6 7];
-[s,t] = GaussSeidelSplit(a)
+[s,t] = GaussSeidelSplit(a);
+//function [count,x,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
+
 
