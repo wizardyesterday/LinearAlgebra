@@ -107,13 +107,13 @@ function [count,x,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
   done = 0;
   count = 0;
 
-  while done == 0 then
+ while done == 0 then
 
     // One more iteration has occurred.
     count =  count + 1;
 
     // Compute estimate.
-    xNew = (B * x) + (Sinverse * b); 
+    xNew = (B * x) + (Sinverse * b);
 
     //Compute norm of error.
     deltaX = xNew - x;
@@ -126,7 +126,7 @@ function [count,x,deltaX] = GaussSeidelIteration(S,T,b,tolerance)
       // Bail out of loop, we're done.
       done = 1;
     else
-      if count > 1000
+      if count > 10000
         // Bail out of loop, we failed to converge.
         done = 1;
       end
@@ -158,15 +158,7 @@ A50 = toeplitz([2 -1 zeros(1,48)]);
 [S50,T50] = GaussSeidelSplit(A50);
 
 // Compute the solutions.
-[count19,x10,deltaX10] = GaussSeidelIteration(S10,T10,10,0.1);
-
-
-b = zeros(2,1);
-b(1) = 1;
-b = [4; -2];
-
-a = [2 -1; -1 2]
-[s,t] = GaussSeidelSplit(a);
-[count,x,deltaX] = GaussSeidelIteration(s,t,b,0.1)
-
+[count10,x10,deltaX10] = GaussSeidelIteration(S10,T10,b10,0.0001);
+[count20,x20,deltaX20] = GaussSeidelIteration(S20,T20,b20,0.0001);
+[count50,x50,deltaX50] = GaussSeidelIteration(S50,T50,b50,0.0001);
 
