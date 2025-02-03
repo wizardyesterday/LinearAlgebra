@@ -139,21 +139,28 @@ endfunction
 //**********************************************************************
 // Mainline code.
 //**********************************************************************
-// Create 10 by 10 second difference matrix.
-A10 = toeplitz([2 -1 zeros(1,8)]);
+// Compute right-side vectors.
+b10 = zeros(10,1);
+b10(1) = 1;
+b20 = zeros(20,1);
+b10(1) = 1;
+b10 = zeros(50,1);
+b50(1) = 1;
 
 // Create the Splits.
 [S10,T10] = GaussSeidelSplit(A10);
 
-// Create 20 by 20 second difference matrix.
-A20 = toeplitz([2 -1 zeros(1,18)]);
-
 // Create the Splits.
 [S20,T20] = GaussSeidelSplit(A20);
 
-// Create 50 by 50 second difference matrix.
+// Create second difference matrices of order 10, 20, 50..
+A10 = toeplitz([2 -1 zeros(1,8)]);
+A20 = toeplitz([2 -1 zeros(1,18)]);
 A50 = toeplitz([2 -1 zeros(1,48)]);
 
 // Create the Splits.
 [S50,T50] = GaussSeidelSplit(A50);
+
+a = [1 2; 6 7];
+[s,t] = GaussSeidelSplit(a)
 
