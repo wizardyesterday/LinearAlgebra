@@ -852,7 +852,7 @@ endfunction
 //
 //  Inputs:
 //
-//    n the upper limit of random integer numbers in the output vector.
+//    n The upper limit of random integer numbers in the output vector.
 //
 //  Outputs:
 //
@@ -863,6 +863,37 @@ function v = randperm(n)
 
 // Emulae the MATLAB randperm) function.
 v = grand(1,"prm",(1:4)')'
+
+endfunction
+
+//******************************************************************
+// 
+//  Name: secondDifferenceMatrix
+//
+//  Purpose: The purpose of this function is to construced sn n by
+//  n second difference matrix.  This is one of Gilbert Strang's
+//  favorite matrices, also called the -1,2,-1 mtrix.
+//
+//  Calling Sequence: A = secondDifferenceMatrix(n)
+//
+//  Inputs:
+//
+//    n - The order of the matrix.  The vallue muat be at least 1.
+//
+//  Outputs:
+//
+//    A - The constructed second difference mtrix if N > 1,
+//    otherwise a value of [] is returned.
+//
+//******************************************************************
+function A = secondDifferenceMatrix(n)
+
+  if n >= 2 then
+    A = toeplitz([2 -1 zeros(1,n-2)]);
+  else
+    // Indicate failure.
+    A = [];
+  end
 
 endfunction
 
