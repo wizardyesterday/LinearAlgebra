@@ -88,7 +88,7 @@ endfunction
 //**********************************************************************
 // Mainline code.
 //**********************************************************************
-// Create second difference matrix of order 3.
+// Create second difference matrix of order 8.
 A = secondDifferenceMatrix(8);
 
 // Create orthogonal matrix.
