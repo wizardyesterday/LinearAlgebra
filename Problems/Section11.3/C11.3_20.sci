@@ -39,6 +39,9 @@ function Q = LanczosMethod(A)
   Q(:,1) = q1;
 
   // Set initial column.
+  j = 1;
+  r = q1;
+  b(j) = 1;
 
 
 endfunction
