@@ -31,17 +31,15 @@ exec('utils.sci',-1);
 function Q = LanczosMethod(A)
 
   // Create normalized vector.
-  q1 = [1; -1; 0];
-  q1 = norm(q1);
+  q1 = [1 -1 0]';
+  q1 = q1 / norm(q1);
 
-  // Set initial values.
-  b = 1;
-  r = q1;
+  // Construct initial orthogonal matrix. matix.
+  Q = zeros(3,3);
 
-  q2 = r / b;
+  // Set initial column.
+  Q(:,1) = q1;
 
-
-  Q = [];
 
 endfunction
 
