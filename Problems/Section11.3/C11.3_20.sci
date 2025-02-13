@@ -17,26 +17,29 @@ exec('utils.sci',-1);
 //  orthogonal matrix using the Lanczos iteration method.
 //
 //
-//  Calling Sequence: Q = LanczosMethod(n)
+//  Calling Sequence: Q = LanczosMethod(A)
 //
 //  Inputs:
 //
-//    n - The order of the orthogonal matrix.
+//    A - The input matrix.
 //
 //  Outputs:
 //
 //    Q - The constructed orthgonal matrix.
 //
 //**********************************************************************
-function Q = LanczosMethod(n)
+function Q = LanczosMethod(A)
 
   // Create normalized vector.
   q1 = [1; -1; 0];
-    q1` = norm(q1);
+  q1 = norm(q1);
 
   // Set initial values.
   b = 1;
   r = q1;
+
+  q2 = r / b;
+
 
   Q = [];
 
@@ -49,7 +52,7 @@ endfunction
 A = secondDifferenceMatrix(3);
 
 // Create orthogonal matrix.
-Q = LanczosMethod(3)
+Q = LanczosMethod(A)
 
 
 
