@@ -36,9 +36,9 @@ function Q = LanczosMethod(A)
 
   // Construct initial orthogonal matrix. matix.
   Q = zeros(3,3);
+  Q(:,1) = q1;
 
   // Set initial column.
-  Q(:,1) = q1;
 
 
 endfunction
