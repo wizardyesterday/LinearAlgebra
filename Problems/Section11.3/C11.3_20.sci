@@ -30,19 +30,39 @@ exec('utils.sci',-1);
 //**********************************************************************
 function Q = LanczosMethod(A)
 
-  // Create normalized vector.
-  q1 = [1 -1 0]';
-  q1 = q1 / norm(q1);
+  // Compute order of A.
+  n = size(A);
+  n = n(1);
 
-  // Construct initial orthogonal matrix. matix.
-  Q = zeros(3,3);
-  Q(:,1) = q1;
+  // Construct initial orthogonal matrix. with initial column vector.
+  Q = zeros(n,n);
+  Q(1) = 1;
 
-  // Set initial column.
+  // Set initial column, r = q1.
   j = 1;
-  r = q1;
+  r = Q(:,1);
   b(j) = 1;
 
+  // Second iteration.
+  Q(:,j+1) = r / b(j);
+  j = j + 1;
+  a = Q(:,j)' * A * Q(:,j);
+  r = A * Q(:,j) - b(j-1) * Q(:,j-1) - a * Q(:,j);
+  b(j) = norm(r);
+
+  // Third iteration.
+  Q(:,j+1) = r / b(j);
+  j = j + 1;
+  a = Q(:,j)' * A * Q(:,j);
+  r = A * Q(:,j) - b(j-1) * Q(:,j-1) - a * Q(:,j);
+  b(j) = norm(r);
+
+  // Fourth iteration.
+  Q(:,j+1) = r / b(j);
+  j = j + 1;
+  a = Q(:,j)' * A * Q(:,j);
+  r = A * Q(:,j) - b(j-1) * Q(:,j-1) - a * Q(:,j);
+  b(j) = norm(r);
 
 endfunction
 
@@ -50,7 +70,7 @@ endfunction
 // Mainline code.
 //**********************************************************************
 // Create second difference matrix of order 3.
-A = secondDifferenceMatrix(3);
+A = secondDifferenceMatrix(4);
 
 // Create orthogonal matrix.
 Q = LanczosMethod(A)
