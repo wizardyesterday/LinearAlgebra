@@ -34,25 +34,47 @@ function Q = LanczosMethod(A)
   n = size(A);
   n = n(1);
 
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
   // Construct initial orthogonal matrix. with initial column vector.
+  // Q contains column vectors: [q1 q2 ... qn'.
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Preallocate the matrix.
   Q = zeros(n,n);
-  Q(1) = 1;
 
-  // Set initial column, r = q1.
+  // q1 = [1 0 ... 0]'.
+  Q(1) = 1;
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+  // Set initial column, r0 equal to q1.
   r = Q(:,1);
+
+  // Chose b0 equal to 1.
   b(1) = 1;
 
    // set initial conditions for loop.
    done = 0;
    j = 1;
 
-   while done == 0
+  while done == 0
 
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    // A single Lanczos iteration.
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    // q_j+1 = r_j / b_j.
     Q(:,j+1) = r / b(j);
+
+    // Increment.
     j = j + 1;
+
+    // a_j = q_j' * A * q_j.
     a = Q(:,j)' * A * Q(:,j);
+
+    // r_j = A * q_j - b_j-1 * q_j-1 - a_j * q_j.
     r = A * Q(:,j) - b(j-1) * Q(:,j-1) - a * Q(:,j);
+
+    // b_j = ||r_j||.
     b(j) = norm(r);
+    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
     if j == n then
       // bail out.
