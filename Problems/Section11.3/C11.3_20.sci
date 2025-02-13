@@ -54,8 +54,10 @@ function Q = LanczosMethod(A)
     r = A * Q(:,j) - b(j-1) * Q(:,j-1) - a * Q(:,j);
     b(j) = norm(r);
 
-    // bail out.
-    done = 1;
+    if j == n then
+      // bail out.
+      done = 1;
+    end
 
   end
 
