@@ -42,12 +42,20 @@ function Q = LanczosMethod(A)
   r = Q(:,1);
   b(1) = 1;
 
-   for j = 2:n
+   // set initial conditions for loop.
+   done = 0;
+   j = 1;
 
-    Q(:,j) = r / b(j-1);
+   while done == 0
+
+    Q(:,j+1) = r / b(j);
+    j = j + 1;
     a = Q(:,j)' * A * Q(:,j);
     r = A * Q(:,j) - b(j-1) * Q(:,j-1) - a * Q(:,j);
     b(j) = norm(r);
+
+    // bail out.
+    done = 1;
 
   end
 
