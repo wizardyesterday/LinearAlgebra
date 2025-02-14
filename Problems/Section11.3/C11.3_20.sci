@@ -45,8 +45,9 @@ function Q = LanczosMethod(A)
   Q(1) = 1;
   //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
-  // Set initial column, r0 equal to q1.
-  r = Q(:,1);
+  // Set r0 equal any q2 different from q1, so r0 = [0 ... -1]'.
+  r = zeros(n,1);
+  r($) = -1;
 
   // Chose b0 equal to 1.
   b(1) = 1;
@@ -92,7 +93,10 @@ endfunction
 A = secondDifferenceMatrix(8);
 
 // Create orthogonal matrix.
-Q = LanczosMethod(A)
+Q = LanczosMethod(A);
+
+// Display result.  It should be an identity matrix.
+disp(clean(Q'*Q));
 
 
 
