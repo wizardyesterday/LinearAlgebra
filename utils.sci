@@ -924,7 +924,7 @@ function Q = LanczosMethod(A)
 
   //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
   // Construct initial orthogonal matrix. with initial column vector.
-  // Q contains column vectors: [q1 q2 ... qn'.
+  // Q contains column vectors: [q1 q2 ... qn].
   //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
   // Preallocate the matrix.
   Q = zeros(n,n);
