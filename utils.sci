@@ -933,7 +933,7 @@ function Q = LanczosMethod(A)
   Q(1) = 1;
   //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
-  // Set r0 equal any q2 different from q1, so r0 = [0 ... -1]'.
+  // Set r0 equal to any q2 different from q1, so r0 = [0 ... -1]'.
   r = zeros(n,1);
   r($) = -1;
 
