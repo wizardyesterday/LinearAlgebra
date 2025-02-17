@@ -974,3 +974,70 @@ function Q = LanczosMethod(A)
 
 endfunction
 
+//**********************************************************************
+//
+//  Name: ArnoldiIteration
+//
+//  Purpose: The purpose of this function is to construct an n by n
+//  orthogonal matrix using the Arnoldi iteration.
+//
+//
+//  Calling Sequence: Q = (A.b)
+//
+//  Inputs:
+//
+//    A - The input matrix.
+//
+//    b - The input vector used to set initial conditions for the
+//    the column vector, q1.
+//
+//  Outputs:
+//
+//    Q - The constructed orthgonal matrix.
+//
+//**********************************************************************
+function Q = ArnoldiIteration(A,b)
+
+  // Compute order of A.
+  N = size(A);
+  N = N(1);
+
+  // Enforce column  vector.
+  b = b(:);
+
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Construct initial orthogonal matrix. with initial column vector.
+  // Q contains column vectors: [q1 q2 ... qn'.
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Preallocate the matrix.
+  Q = zeros(N,N);
+
+  // q1 = b / ||b}}.
+  Q(:,1) = b / norm(b);
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+  for n = 1:N-1
+
+    // v = a * q_n.
+    v = A * Q(:,n);
+
+    // Perform Gram-Schmidt orthogonalization.
+    for j = 1:n
+
+      // h_jn = q_j' * v.
+      H(j,n) = Q(:,j)' * v;
+
+      // v = v - h_jn * q_j.
+      v = v - H(j,n) * Q(:,j);
+
+    end
+
+    // h_n+1,n = ||v||.
+    H(n+1,n) = norm(v);
+
+    // q_n+1 = v / h_n+1,n = v / ||v||.
+    Q(:,n+1) = v / H(n+1,n);
+    
+  end
+
+endfunction
