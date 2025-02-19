@@ -1100,7 +1100,7 @@ function x = CG_Iteration(A,b)
     // stated in the textbook exercises, really should
     // have included this bail out clause.
     //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-    if norm(r) < .0001
+    if norm(r) == 0
       // Bail out.
       break
     else

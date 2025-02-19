@@ -75,7 +75,7 @@ function [x,x10,x20] = CG_IterationKludge(A,b)
     // stated in the textbook exercises, really should
     // have included this bail out clause.
     //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-    if norm(r) < .0001
+    if norm(r) == 0
       break
     else
       // Update x_n-1, r_n-1, d_n-1.
