@@ -13,13 +13,19 @@ exec('utils.sci',-1);
 // Mainline code.
 //**********************************************************************
 // Create -1,2,-1 matrix.
-A = secondDifferenceMatrix(4);;
+A = secondDifferenceMatrix(100);;
 
-// Create (1,1,1,1) columnvector.
-b = ones(4,1);
+// Create (1,...,1) columnvector.
+b = ones(100,1);
 
 //Compute solution to Ax=b.
-x = CG_Iteration(A,b)
+x = CG_Iteration(A,b);
+
+// Compute exact solution.
+x_exact = A \ b;
+
+// Plot results.
+plot(1:100,x);
 
 
 
