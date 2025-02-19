@@ -1059,7 +1059,7 @@ endfunction
 //
 //  Outputs:
 //
-//    x - The solution to the equation Ax = b
+//    x - The solution to the equation Ax = b.
 //
 //**********************************************************************
 function x = CG_Iteration(A,b)
