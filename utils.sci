@@ -978,11 +978,10 @@ endfunction
 //
 //  Name: ArnoldiIteration
 //
-//  Purpose: The purpose of this function is to construct an n by n
+//  Purpose: The purpose of this function is to construct an  by N
 //  orthogonal matrix using the Arnoldi iteration.
 //
-//
-//  Calling Sequence: Q = ArnoldiIteration(A.b)
+//  Calling Sequence: [Q,H] = ArnoldiIteration(A.b)
 //
 //  Inputs:
 //
@@ -994,6 +993,8 @@ endfunction
 //  Outputs:
 //
 //    Q - The constructed orthgonal matrix.
+//
+//    H - The constructed Hesenberg matrix.
 //
 //**********************************************************************
 function Q = ArnoldiIteration(A,b)
@@ -1047,7 +1048,15 @@ endfunction
 //  Name: CG_iteration
 //
 //  Purpose: The purpose of this function is to solve Ax = b using the 
-//  conjugate iteration.
+//  conjugate iteration.  Note that r = b - Ax is the residual vector,
+//  and d is the direction vector that is used for refining the
+//  solution during each iteration.  The original textbookused a
+//  'for loop' with no checks for the norm of the residual having a
+//  value of zero.  For some equations, a solution could be found
+//  before the loop terminates.  If this were to occu4r ||r|| has a
+//  value of zero and a divide by zero error occurs.  I have added code
+//  to test for this zero condition, and bail out of the loop, should
+//  this condition occur.  The solution has been found in this case.
 //
 //  Calling Sequence: x = CG_Iteration(A.b)
 //
