@@ -981,7 +981,7 @@ endfunction
 //  Purpose: The purpose of this function is to construct an  by N
 //  orthogonal matrix using the Arnoldi iteration.
 //
-//  Calling Sequence: [Q,H] = ArnoldiIteration(A.b)
+//  Calling Sequence: Q = ArnoldiIteration(A.b)
 //
 //  Inputs:
 //
@@ -993,8 +993,6 @@ endfunction
 //  Outputs:
 //
 //    Q - The constructed orthgonal matrix.
-//
-//    H - The constructed Hesenberg matrix.
 //
 //**********************************************************************
 function Q = ArnoldiIteration(A,b)
