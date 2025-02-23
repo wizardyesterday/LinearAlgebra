@@ -902,7 +902,9 @@ endfunction
 //  Name: LanczosMethod
 //
 //  Purpose: The purpose of this function is to construct an n by n
-//  orthogonal matrix using the Lanczos iteration method.
+//  orthogonal matrix using the Lanczos iteration method.  This algothm
+//  is published in a book entitled "Numerical Linear Algebra" by
+//  Lloyd N. Trefethen and David Bau, III.
 //
 //
 //  Calling Sequence: Q = LanczosMethod(A)
@@ -919,58 +921,57 @@ endfunction
 function Q = LanczosMethod(A)
 
   // Compute order of A.
-  n = size(A);
-  n = n(1);
+  N = size(A);
+  N = N(1);
 
   //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
   // Construct initial orthogonal matrix. with initial column vector.
-  // Q contains column vectors: [q1 q2 ... qn].
+  // Q contains column vectors: [q0 q1 q2 ... qn].
+  // After the iteration is complete, q0 will be deleted since it
+  // is only needed during the algorithm.
   //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-  // Preallocate the matrix.
-  Q = zeros(n,n);
-
-  // q1 = [1 0 ... 0]'.
-  Q(1) = 1;
+  // Preallocate the matrix, q0 = 0.
+  Q = zeros(N,N+1);
   //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
-  // Set r0 equal to any q2 different from q1, so r0 = [0 ... -1]'.
-  r = zeros(n,1);
-  r($) = -1;
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  // Initialize.
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+  Beta0 = 0;
 
-  // Chose b0 equal to 1.
-  b(1) = 1;
+  // b0 = [1 ... 0].
+  b0 = zeros(N,1);
+  b0(1) = 1;
 
-   // set initial conditions for loop.
-   done = 0;
-   j = 1;
+  // q1 = b0 / ||b0||.
+  Q(:,2) = b0 / norm(b0);
+  //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
-  while done == 0
 
-    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-    // A single Lanczos iteration.
-    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-    // q_j+1 = r_j / b_j.
-    Q(:,j+1) = r / b(j);
+  for n = 2:N
 
-    // Increment.
-    j = j + 1;
+    // v = A * q_n.
+    v = A * Q(:,n);
 
-    // a_j = q_j' * A * q_j.
-    a = Q(:,j)' * A * Q(:,j);
+    // alpha_n = q_n' * v.
+    Alpha = Q(:,n)' * v;
 
-    // r_j = A * q_j - b_j-1 * q_j-1 - a_j * q_j.
-    r = A * Q(:,j) - b(j-1) * Q(:,j-1) - a * Q(:,j);
+    // v = v - beta_n-1 * q_n-1) - alpha_n * q_n.
+    v = v - Beta0 * Q(:,n-1) - Alpha  * Q(:,n);
 
-    // b_j = ||r_j||.
-    b(j) = norm(r);
-    //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+    // beta_n = ||v||.
+    Beta = norm(v);
 
-    if j == n then
-      // bail out.
-      done = 1;
-    end
+    // q_n+1 = v / beta_n.
+    Q(:,n+1) = v / norm(Beta);
 
-  end
+    // Update for next iteration.
+    Beta0 = Beta;
+
+  end 
+ 
+  // We no longer need q0. Q is an N by N matrix.
+  Q(:,1) = [];
 
 endfunction
 
