@@ -963,7 +963,7 @@ function Q = LanczosMethod(A)
     Beta = norm(v);
 
     // q_n+1 = v / beta_n.
-    Q(:,n+1) = v / norm(Beta);
+    Q(:,n+1) = v / Beta;
 
     // Update for next iteration.
     Beta0 = Beta;
